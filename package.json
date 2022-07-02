@@ -10,7 +10,7 @@
     "prepare": "husky install",
     "lint": "eslint .",
     "test": "jest",
-    "test:coverage": "yarn test --coverage --watchAll --no-cache"
+    "coverage": "yarn test --coverage --watchAll --no-cache"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.18.6",
