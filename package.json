@@ -36,7 +36,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "CI=true npm run test"
+      "pre-commit": "CI=true yarn test"
     }
   },
   "dependencies": {
