@@ -19,8 +19,8 @@ the same heading.
 Assume that the square directly North from (x, y) is (x, y+1).
 
 ## Goals
-#Practice TDD and code smells, design patterns and principles.
-    -100% of Code and Branches COVERAGE
+    Practice TDD and code smells, design patterns and principles.
+    100% of Code and Branches COVERAGE.
     
 ## Technical description
 
