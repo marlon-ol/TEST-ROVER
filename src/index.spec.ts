@@ -23,7 +23,7 @@ describe('Should create and use full application', () => {
   });
 
   it('Should throw error when create an instance of class without correct input (empty)', () => {
-    expect(() => new StartNavigation('')).toThrow('Invalid input data');
+    expect(() => new StartNavigation('')).toThrow('Plateau cant be empty');
   });
 
   it('should update inputData', () => {

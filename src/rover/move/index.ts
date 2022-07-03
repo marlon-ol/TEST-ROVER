@@ -2,7 +2,7 @@ import Plateau from '../../plateau';
 import { AvailableDirections, AvailableTurnDirections } from '../types';
 import IMove from './move.interface';
 import ISpin from './spin.interface';
-import { cartesianPlane, driveAction } from './types';
+import { cartesianPlane, driveAction, SpinType } from './types';
 
 export default class Move implements ISpin, IMove {
   constructor(
@@ -19,7 +19,7 @@ export default class Move implements ISpin, IMove {
     W: { x: -1, y: 0 },
   };
 
-  protected spinAction: any = {
+  protected spinAction: SpinType = {
     L: {
       N: 'W',
       W: 'S',

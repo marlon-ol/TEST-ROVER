@@ -9,3 +9,18 @@ export type driveAction = {
   E: cartesianPlane;
   W: cartesianPlane;
 };
+
+export type SpinType = {
+  L: {
+    N: string;
+    W: string;
+    S: string;
+    E: string;
+  };
+  R: {
+    N: string;
+    S: string;
+    E: string;
+    W: string;
+  };
+};

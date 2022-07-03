@@ -3,7 +3,7 @@ import Rover from './rover';
 import { ROVER_TURN_DIRECTIONS } from './rover/constants';
 import { AvailableDirections, AvailableTurnDirections } from './rover/types';
 import { IStartNavigation } from './start-navigation.interface';
-import { cleanInputType, outputArray, outputData } from './types';
+import { cleanInputType, outputArray, outputData, PlateauInput } from './types';
 
 export default class StartNavigation implements IStartNavigation {
   private cleanInput: cleanInputType[] = [];
@@ -11,27 +11,21 @@ export default class StartNavigation implements IStartNavigation {
   private plateau: Plateau;
 
   constructor(input: string) {
-    const readInput = this.readInput(input);
-    const [plateau_x, plateau_y]: any = readInput.shift();
+    const readInput: cleanInputType[] = this.readInput(input);
+    const [plateau_x, plateau_y] = <PlateauInput>readInput.shift();
 
     this.cleanInput = readInput;
-    this.plateau = new Plateau(plateau_x, plateau_y);
+    this.plateau = new Plateau(Number(plateau_x), Number(plateau_y));
   }
 
   private readInput(input: string): cleanInputType[] {
     const inputArray: string[] = input.split('\n');
-    const cleanInput: cleanInputType[] = inputArray.map(
-      (line: string): string[] => {
-        return line
-          .split('')
-          .filter((digit: string): boolean => digit.trim() !== '');
-      },
-    );
 
-    if (!cleanInput[0].length) {
-      throw new Error('Invalid input data');
-    }
-    return cleanInput;
+    return <cleanInputType[]>inputArray.map((line: string): string[] => {
+      return line
+        .split('')
+        .filter((digit: string): boolean => digit.trim() !== '');
+    });
   }
 
   dispatch(): string {
@@ -63,7 +57,7 @@ export default class StartNavigation implements IStartNavigation {
     }
   };
 
-  private saveRoverPosition(rover: Rover) {
+  private saveRoverPosition(rover: Rover): void {
     this.outputs.push({
       position: rover.getPosition(),
       direction: rover.getDirection(),
