@@ -7,9 +7,15 @@ import { cleanInputType, outputArray, outputData } from './types';
 
 export default class StartNavigation implements IStartNavigation {
   private cleanInput: cleanInputType[] = [];
+  private outputs: outputArray = [];
+  private plateau: Plateau;
 
   constructor(input: string) {
-    this.cleanInput = this.readInput(input);
+    const readInput = this.readInput(input);
+    const [plateau_x, plateau_y]: any = readInput.shift();
+
+    this.cleanInput = readInput;
+    this.plateau = new Plateau(plateau_x, plateau_y);
   }
 
   private readInput(input: string): cleanInputType[] {
@@ -21,6 +27,7 @@ export default class StartNavigation implements IStartNavigation {
           .filter((digit: string): boolean => digit.trim() !== '');
       },
     );
+
     if (!cleanInput[0].length) {
       throw new Error('Invalid input data');
     }
@@ -28,36 +35,39 @@ export default class StartNavigation implements IStartNavigation {
   }
 
   dispatch(): string {
-    const outputs: outputArray = [];
-    const plateauData: string[] = this.cleanInput.shift() ?? ['0', '0'];
-    const plateau = new Plateau(Number(plateauData[0]), Number(plateauData[1]));
+    this.cleanInput.forEach(this.runCommandLine);
+    return this.getStringfiedOutput(this.outputs);
+  }
 
-    this.cleanInput.forEach((value, index) => {
-      if (value.length === 3) {
-        const rover = new Rover(
-          Number(value[0]),
-          Number(value[1]),
-          <AvailableDirections>value[2],
-          plateau,
-        );
+  private runCommandLine = async (
+    value: cleanInputType,
+    index: number,
+  ): Promise<void> => {
+    if (value.length === 3) {
+      const [rover_x, rover_y, rover_direction] = value;
+      const commandsArray: string[] = this.cleanInput[index + 1];
+      const rover = new Rover(
+        Number(rover_x),
+        Number(rover_y),
+        <AvailableDirections>rover_direction,
+        this.plateau,
+      );
 
-        const commandsArray: string[] = this.cleanInput[index + 1];
-        commandsArray.forEach((command, intra_index) => {
-          if (ROVER_TURN_DIRECTIONS.includes(command)) {
-            rover.turn(<AvailableTurnDirections>command);
-          } else if (command === 'M') {
-            rover.drive();
-          }
-          if (intra_index + 1 === commandsArray.length) {
-            outputs.push({
-              position: rover.getPosition(),
-              direction: rover.getDirection(),
-            });
-          }
-        });
-      }
+      commandsArray.forEach((command, intra_index) => {
+        this.threatMovement(command, rover);
+
+        if (intra_index + 1 === commandsArray.length) {
+          this.saveRoverPosition(rover);
+        }
+      });
+    }
+  };
+
+  private saveRoverPosition(rover: Rover) {
+    this.outputs.push({
+      position: rover.getPosition(),
+      direction: rover.getDirection(),
     });
-    return this.getStringfiedOutput(outputs);
   }
 
   private getStringfiedOutput(outputs: outputArray): string {
@@ -66,6 +76,14 @@ export default class StartNavigation implements IStartNavigation {
         [value.position.x, value.position.y, value.direction].join(' '),
       )
       .join('\n');
+  }
+
+  private async threatMovement(command: string, rover: Rover): Promise<void> {
+    if (ROVER_TURN_DIRECTIONS.includes(command)) {
+      rover.turn(<AvailableTurnDirections>command);
+    } else if (command === 'M') {
+      rover.drive();
+    }
   }
 
   setCleanInput(payload: cleanInputType[]): this {
