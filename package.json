@@ -10,7 +10,8 @@
     "prepare": "husky install",
     "lint": "prettier -c ./src/*",
     "test": "jest",
-    "coverage": "yarn test --coverage --watchAll --no-cache"
+    "coverage:dev": "yarn test --coverage --no-cache --wathAll",
+    "coverage": "yarn test --coverage --no-cache"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.18.6",
