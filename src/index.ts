@@ -1,9 +1,11 @@
 import Plateau from './plateau';
 import Rover from './rover';
+import { ROVER_TURN_DIRECTIONS } from './rover/constants';
 import { AvailableDirections, AvailableTurnDirections } from './rover/types';
+import { IStartNavigation } from './start-navigation.interface';
 import { cleanInputType, outputArray, outputData } from './types';
 
-export default class StartNavigation {
+export default class StartNavigation implements IStartNavigation {
   private cleanInput: cleanInputType[] = [];
 
   constructor(input: string) {
@@ -26,10 +28,10 @@ export default class StartNavigation {
   }
 
   dispatch(): string {
+    const outputs: outputArray = [];
     const plateauData: string[] = this.cleanInput.shift() ?? ['0', '0'];
     const plateau = new Plateau(Number(plateauData[0]), Number(plateauData[1]));
 
-    var outputs: outputArray = [];
     this.cleanInput.forEach((value, index) => {
       if (value.length === 3) {
         const rover = new Rover(
@@ -41,13 +43,13 @@ export default class StartNavigation {
 
         const commandsArray: string[] = this.cleanInput[index + 1];
         commandsArray.forEach((command, intra_index) => {
-          if (['R', 'L'].includes(command)) {
+          if (ROVER_TURN_DIRECTIONS.includes(command)) {
             rover.turn(<AvailableTurnDirections>command);
           } else if (command === 'M') {
             rover.drive();
           }
           if (intra_index + 1 === commandsArray.length) {
-            outputs = outputs.concat({
+            outputs.push({
               position: rover.getPosition(),
               direction: rover.getDirection(),
             });
@@ -66,7 +68,7 @@ export default class StartNavigation {
       .join('\n');
   }
 
-  setCleanInput(payload: any): this {
+  setCleanInput(payload: cleanInputType[]): this {
     this.cleanInput = payload;
     return this;
   }
