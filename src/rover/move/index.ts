@@ -1,24 +1,25 @@
 import Plateau from '../../plateau';
 import { AvailableDirections, AvailableTurnDirections } from '../types';
+import IMove from './move.interface';
 import ISpin from './spin.interface';
 import { cartesianPlane, driveAction } from './types';
 
-export default class Move implements ISpin {
+export default class Move implements ISpin, IMove {
   constructor(
     private current_x: number,
     private current_y: number,
     private current_direction: AvailableDirections,
-    private plateau_data: Plateau,
+    private explored_surface: Plateau,
   ) {}
 
-  private driveAction: driveAction = {
+  protected driveAction: driveAction = {
     N: { x: 0, y: 1 },
     S: { x: 0, y: -1 },
     E: { x: 1, y: 0 },
     W: { x: -1, y: 0 },
   };
 
-  private spinAction: any = {
+  protected spinAction: any = {
     L: {
       N: 'W',
       W: 'S',
@@ -36,7 +37,7 @@ export default class Move implements ISpin {
   drive(): this {
     const driveDirectionAction: cartesianPlane =
       this.driveAction[this.current_direction];
-    const { x, y } = this.plateau_data.getDimensions();
+    const { x, y } = this.explored_surface.getDimensions();
 
     if (
       this.current_x + driveDirectionAction.x > x ||

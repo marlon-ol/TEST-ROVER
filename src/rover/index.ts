@@ -8,9 +8,9 @@ export default class Rover extends Move {
     private initial_x: number,
     private initial_y: number,
     private initial_direction: AvailableDirections,
-    private _plateau: Plateau,
+    _explored_surface: Plateau,
   ) {
-    super(initial_x, initial_y, initial_direction, _plateau);
+    super(initial_x, initial_y, initial_direction, _explored_surface);
   }
 
   getInitialPosition(): cartesianPlane {

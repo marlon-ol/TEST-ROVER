@@ -12,17 +12,17 @@ describe('Should create and use move class', () => {
     move = new Move(x, y, 'N', plateau_data);
   });
 
-  it('Should create and use drive method', () => {
+  it('Should use drive method', () => {
     move.drive();
     expect(move.getPosition()).toMatchObject({ x, y: y + 1 });
   });
 
-  it('Should create and use turn LEFT method', () => {
+  it('Should use turn LEFT method', () => {
     move.turn('L');
     expect(move.getDirection()).toBe('W');
   });
 
-  it('Should create and use turn RIGHT method', () => {
+  it('Should use turn RIGHT method', () => {
     move.turn('R');
     expect(move.getDirection()).toBe('E');
   });
