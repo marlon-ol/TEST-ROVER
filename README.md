@@ -50,5 +50,5 @@ After this, you can run
     cd ~/you-name/TEST-ROVER
     yarn install
     yarn test
-    yarn test coverage
+    yarn coverage
 ```
