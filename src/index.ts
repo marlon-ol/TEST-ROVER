@@ -2,7 +2,7 @@ import Plateau from './plateau';
 import Rover from './rover';
 import { ROVER_TURN_DIRECTIONS } from './rover/constants';
 import { AvailableDirections, AvailableTurnDirections } from './rover/types';
-import { IStartNavigation } from './start-navigation.interface';
+import { IStartNavigation } from './interface/start-navigation.interface';
 import { cleanInputType, outputArray, outputData, PlateauInput } from './types';
 
 export default class StartNavigation implements IStartNavigation {

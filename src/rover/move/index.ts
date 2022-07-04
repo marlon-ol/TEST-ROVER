@@ -1,7 +1,7 @@
 import Plateau from '../../plateau';
 import { AvailableDirections, AvailableTurnDirections } from '../types';
-import IMove from './move.interface';
-import ISpin from './spin.interface';
+import IMove from './interface/move.interface';
+import ISpin from './interface/spin.interface';
 import { cartesianPlane, driveAction, SpinType } from './types';
 
 export default class Move implements ISpin, IMove {

@@ -1,4 +1,4 @@
-import { cartesianPlane } from './types';
+import { cartesianPlane } from '../types';
 
 export default interface IMove {
   /**

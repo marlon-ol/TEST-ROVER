@@ -1,4 +1,4 @@
-import { cleanInputType } from './types';
+import { cleanInputType } from '../types';
 
 export interface IStartNavigation {
   /**

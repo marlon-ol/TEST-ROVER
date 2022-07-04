@@ -1,4 +1,4 @@
-import { AvailableDirections, AvailableTurnDirections } from '../types';
+import { AvailableDirections, AvailableTurnDirections } from '../../types';
 
 export default interface ISpin {
   /**
