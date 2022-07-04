@@ -19,9 +19,10 @@ the same heading.
 Assume that the square directly North from (x, y) is (x, y+1).
 
 ## Goals
+
     Practice TDD and code smells, design patterns and principles.
     100% of Code and Branches COVERAGE.
-    
+
 ## Technical description
 
 Develop an api that moves a Rover around an Plateau.
@@ -34,6 +35,11 @@ Sample api:
 const app = StartNavigation("5 5\n1 2 N\n\nLMLMLMLMM\n3 3 E\nMMRMMRMRRM")
 app.dispatch() // Will return the new positions of Rovers
 ```
+
+## Technical Reqs
+
+- [NodeJs v18.4.0](https://nodejs.org/ar/blog/release/v18.4.0/)
+- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable)
 
 # Instalation
 
